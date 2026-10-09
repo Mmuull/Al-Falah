@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Siswa</h1>
+    <p id="data"></p>
+    <span>Slider Value:</span><br>
+    <input type="range" name="slider" id="slider" min="0" max="100" value="50">
+    <script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
+    import { getDatabase, ref, get, set, onValue } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-database.js";
+    // TODO: Add SDKs for Firebase products that you want to use
+    // https://firebase.google.com/docs/web/setup#available-libraries
+
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+        apiKey: "AIzaSyBgb7mjoiUMD46CHeoan0b4xt8Bl0X0naE",
+        authDomain: "fir-k1-baa3a.firebaseapp.com",
+        databaseURL: "https://fir-k1-baa3a-default-rtdb.asia-southeast1.firebasedatabase.app",
+        projectId: "fir-k1-baa3a",
+        storageBucket: "fir-k1-baa3a.firebasestorage.app",
+        messagingSenderId: "252525867454",
+        appId: "1:252525867454:web:f93b0c5165ff911169c9ef"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+    const dbRef = ref(db, "/");
+
+    const paragraf = document.getElementById("data");
+    get(dbRef).then((snapshot) => {
+        if (snapshot.exists()){
+            const val = snapshot.val();
+            console.log("Data diterima", val);
+            paragraf.innerHTML = `NIS: ${val.siswa.NIS} <br> ${val.siswa.Nama}`;
+        }
+    })
+
+    const slider = document.getElementById('slider');
+    slider.addEventListener("input", (e) => {
+        const value = e.target.value;
+        set("slider", Number(value))
+        .then(() => {
+            console.log("Data updated");
+        })
+        .catch((error) => {
+            console.log("Error");
+        })
+    })
+
+    onValue(dbRef, (snapshot) => {
+        slider.value = data.slider
+    })
+
+    // let siswa = {
+    //     nis : 123,
+    //     nama : "Lutung",
+    //     naon(){
+    //         return "blabla";
+    //     }
+    // }
+    // console.log(siswa.naon())
+
+    </script>
+</body>
+</html>

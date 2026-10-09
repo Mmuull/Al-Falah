@@ -1,0 +1,62 @@
+<!-- JavaScript Document Manipulation  -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JS DOM</title>
+    <style>
+        .K3{
+            font-size: 100;
+        }
+    </style>
+</head> marquee
+<body>
+    <h1 class='K3' id="heading1">Heading 1</h1>
+    <h2 id="heading2.0">Heading 2.0</h2>
+    <h2 class='K3' id="heading2.1">Heading 2.1</h2>
+    <button id="warna" onclick="naon()">Warna</button>
+    <script>
+        const h1 = document.getElementById('heading1');
+        h1.innerHTML = "Javascript DOM";
+        h1.style.color = 'blue';
+        h1.style.fontFamily = 'Times New Roman';
+        a = 1;
+        
+        const h2 = document.getElementById('heading2.0');
+        setInterval(() => {
+            time = new Date();
+            h2.innerHTML = `${time.getHours()} : ${time.getMinutes()} : ${time.getSeconds()}`;
+            console.log(`Saya akan lawan! ${a}`);
+            a++;
+        }, 1000);
+        
+        ubahWarna = ['red', 'bebas', 'kuning', 'hijau']
+        const warna = document.getElementById('warna');
+        index = 0;
+        warna.addEventListener('click', () => {
+            h2.style.color = ubahWarna[index];
+            index++;
+            index %= 4;
+
+            body = document.getElementsByTagName('body');
+            p = document.createElement('p');
+            p.innerHTML = "El sawit";
+            body[0].appendChild(p);
+            p.style.color = 'polkadot';
+        })
+
+        k3 = document.getElementsByClassName('K3');
+        
+        setTimeout(() => {
+            console.log("HTML");
+        }, 1000);
+
+        function naon(){
+            console.log("NAaon")
+        }
+
+    </script>
+    <p>El Sawit</p>
+</body>
+</html>

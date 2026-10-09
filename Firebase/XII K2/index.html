@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Firebase</title>
+</head>
+<body>
+  <h1>Firebase Get Data</h1>
+  <script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";    // TODO: Add SDKs for Firebase products that you want to use
+    import { getDatabase, ref, get } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-database.js";    // TODO: Add SDKs for Firebase products that you want to use
+    // https://firebase.google.com/docs/web/setup#available-libraries
+
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyCu5XY3DVESDB5t012QMVaS5s7HPT-1Ge4",
+      authDomain: "fir-c409a.firebaseapp.com",
+      databaseURL: "https://fir-c409a-default-rtdb.asia-southeast1.firebasedatabase.app",
+      projectId: "fir-c409a",
+      storageBucket: "fir-c409a.firebasestorage.app",
+      messagingSenderId: "904455775561",
+      appId: "1:904455775561:web:72f487b85b4ad5449b2698"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+    const dbRef = ref(db, '/');
+
+    get(dbRef)
+    .then( snapshot => {
+      if (snapshot.exists()){
+        const val = snapshot.val();
+        console.log("Data diterima", val);
+      }
+    })
+    .catch( error => {
+      console.log("Error");
+    });
+
+  </script>
+</body>
+</html>

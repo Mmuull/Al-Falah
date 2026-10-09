@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JS DOM</title>
+    <style>
+        .judul{
+            color: orange;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1 id="heading">Heading</h1>
+    <h2 id="heading2">0</h2>
+    <button id="stop-warna">Warna</button>
+    <marquee class="judul" behavior="" direction="">Saya akan lawan</marquee>
+
+    <script>
+        const heading = document.getElementById('heading');
+        heading.textContent = "Mandiri blokir akun nasabahnya";
+        heading.style.color = "red";
+
+        // setInterval(() => {}, 2000)
+
+        let angka = 0;
+        const h2 = document.getElementById('heading2');
+        
+        setInterval(() => {
+            h2.innerHTML = `Angka : ${angka}`;
+            angka = angka + 1;
+        }, 2000);
+
+        const warna = ['red', 'yellow', 'green', 'blue'];
+        let index = 0;
+        const stopButton = document.getElementById('stop-warna');
+        stopButton.addEventListener('click', () => {
+            h2.style.color = warna[index];
+            index = (index + 1) % warna.length;
+            
+            const element = document.createElement('marquee');
+            element.textContent = 'Saya akan lawan';
+            document.body.appendChild(element);
+
+            element.classList.add('judul');
+        });
+
+    </script>
+</body>
+</html>

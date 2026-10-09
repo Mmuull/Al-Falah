@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1 id="head"></h1>
+    <span id="span1"></span>
+    <span id="span2"></span>
+    <span id="span3"></span>
+    <script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
+    import { getDatabase, ref, get } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-database.js";
+    // TODO: Add SDKs for Firebase products that you want to use
+    // https://firebase.google.com/docs/web/setup#available-libraries
+
+    // Your web app's Firebase configuration
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+    const firebaseConfig = {
+        apiKey: "AIzaSyAso45qxfYsEF4CyAbAeMHpHYOUrLnfjqU",
+        authDomain: "fir-jsk3.firebaseapp.com",
+        databaseURL: "https://fir-jsk3-default-rtdb.asia-southeast1.firebasedatabase.app",
+        projectId: "fir-jsk3",
+        storageBucket: "fir-jsk3.firebasestorage.app",
+        messagingSenderId: "307646259868",
+        appId: "1:307646259868:web:f173fb97c12a13cbf88359"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+
+    const dbRef = ref(db, "/");
+    get(dbRef).then( (snapshot) => {
+        if (snapshot.exists()){
+            const val = snapshot.val();
+            console.log(`Datab diterima`, val)
+            
+            document.getElementById('head').innerHTML = "Siswa";
+            document.getElementById('span1').innerHTML = val.Siswa.nis;
+            document.getElementById('span2').innerHTML = val.Siswa.nama;
+            document.getElementById('span3').innerHTML = val.Siswa.kelas;
+        }
+    } )
+    
+    
+
+    </script>
+</body>
+</html>

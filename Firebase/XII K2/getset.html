@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Firebase Bootstrap Slider Sync</title>
+    <!-- Bootstrap 5 CSS CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card shadow">
+                    <div class="card-body p-4 text-center">
+                        <h3 class="mb-4">Firebase Slider Sync</h3>
+
+                        <!-- Bootstrap Range Slider -->
+                        <div class="mb-3">
+                            <label for="customSlider" class="form-label">Slide to change value:</label>
+                            <input type="range" class="form-range" id="customSlider" min="0" max="100" value="0">
+                        </div>
+
+                        <!-- Display Current Value -->
+                        <div class="alert alert-primary fs-4" role="alert">
+                            Current Value: <span id="sliderValue" class="fw-bold">0</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase SDK (Modular v9/v10) -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getDatabase, ref, set, onValue } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+
+        // 1. Replace with your Firebase project configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyCu5XY3DVESDB5t012QMVaS5s7HPT-1Ge4",
+            authDomain: "fir-c409a.firebaseapp.com",
+            databaseURL: "https://fir-c409a-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "fir-c409a",
+            storageBucket: "fir-c409a.firebasestorage.app",
+            messagingSenderId: "904455775561",
+            appId: "1:904455775561:web:72f487b85b4ad5449b2698"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+
+        // Reference to the slider value in the database
+        const sliderRef = ref(db, 'settings/sliderValue');
+
+        const sliderElement = document.getElementById('customSlider');
+        const valueDisplay = document.getElementById('sliderValue');
+
+        // 2. GET: Listen for real-time updates from Firebase using onValue
+        onValue(sliderRef, (snapshot) => {
+            const data = snapshot.val();
+            if (data !== null) {
+                // Update slider position and text display if changed remotely or initially loaded
+                sliderElement.value = data;
+                valueDisplay.textContent = data;
+            }
+        });
+
+        // 3. SET: Send data to Firebase when the user drags the slider
+        // Use 'input' for real-time updates while dragging, or 'change' if you only want to update on release
+        sliderElement.addEventListener('input', (e) => {
+            const currentValue = e.target.value;
+            
+            // Optimistically update local display immediately for smoothness
+            valueDisplay.textContent = currentValue;
+
+            // Write to Firebase Database
+            set(sliderRef, Number(currentValue))
+                .catch((error) => {
+                    console.error("Failed to update value: ", error);
+                });
+        });
+    </script>
+
+    <!-- Bootstrap 5 JS Bundle CDN (Optional, for components) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
